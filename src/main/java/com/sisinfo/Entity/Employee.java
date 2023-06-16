@@ -2,18 +2,29 @@ package com.sisinfo.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Getter
     private Long id;
 
-    // Aggiungi gli attributi necessari per l'entità Employee
+    @Getter
+    @Setter
+    private String name;
+
+    @Getter
+    @Setter
+    private int telephone;
+
+    @Getter
+    @Setter
+    private String email;
 
     @Getter
     @Setter
@@ -30,11 +41,5 @@ public class Employee {
     @Getter
     @Setter
     private int permissionHours;
-
-
-    public Long getId() {
-        return id;
-    }
-
 
 }

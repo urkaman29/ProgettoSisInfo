@@ -6,7 +6,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-    // Metodi per l'accesso personalizzato al database, se necessario
-    // ...
 }
-
