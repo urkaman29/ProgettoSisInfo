@@ -2,49 +2,47 @@ package com.sisinfo.Service;
 
 import com.sisinfo.Entity.Employee;
 import com.sisinfo.Repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class EmployeeService {
-    private static final double TOTAL_WORK_HOURS_PER_MONTH = 40;
-    // Dipendenza del repository necessaria
+
     private final EmployeeRepository employeeRepository;
 
-    // Costruttore
+    @Autowired
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
-    public void saveEmployee(Employee employee) {
-        employeeRepository.save(employee);
-    }
-
-    public double calculateSalary(Employee employee) {
-        // Implementa il calcolo dello stipendio in base alle ore di lavoro e alle ferie/permessi
-        double baseSalary = employee.getBaseSalary();
-        int workedHours = employee.getWorkedHours();
-        int vacationHours = employee.getVacationHours();
-        int permissionHours = employee.getPermissionHours();
-
-        double hourlyRate = baseSalary / TOTAL_WORK_HOURS_PER_MONTH;
-        double salary = workedHours * hourlyRate - (vacationHours + permissionHours) * hourlyRate;
-
-        return salary;
-    }
-
     public List<Employee> getAllEmployees() {
-        return null;
+        return employeeRepository.findAll();
     }
 
-    public List<Employee> getEmployeesSortedByAge() {
-        return null;
+    public Employee getEmployeeById(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
+    public Employee createEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
 
-    // Metodi per gestire la logica di business dei dipendenti
-    // Implementa i punti richiesti 1, 2, 5, 6, 7, 8 e 9
-    // ...
+    public Employee updateEmployee(Long id, Employee employee) {
+        Employee existingEmployee = getEmployeeById(id);
+        existingEmployee.setName(employee.getName());
+        existingEmployee.setTelephone(employee.getTelephone());
+        existingEmployee.setEmail(employee.getEmail());
+        existingEmployee.setBaseSalary(employee.getBaseSalary());
+        existingEmployee.setWorkedHours(employee.getWorkedHours());
+        existingEmployee.setVacationHours(employee.getVacationHours());
+        existingEmployee.setPermissionHours(employee.getPermissionHours());
+        return employeeRepository.save(existingEmployee);
+    }
+
+    public void deleteEmployee(Long id) {
+        employeeRepository.deleteById(id);
+    }
 }
-
