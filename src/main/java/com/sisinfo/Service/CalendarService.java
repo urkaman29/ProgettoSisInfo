@@ -1,28 +1,34 @@
 package com.sisinfo.Service;
 
-import com.sisinfo.Entity.CalendarEvent;
+import com.sisinfo.Entity.Calendar;
 import com.sisinfo.Repository.CalendarRepository;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class CalendarService {
-    private final CalendarRepository calendarRepository;
+    private CalendarRepository calendarRepository;
 
+    @Autowired
     public CalendarService(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
     }
 
-    public CalendarEvent getCalendar() {
-        // Aggiungi la logica per ottenere il calendario dall'orario di lavoro
-        // Puoi utilizzare i metodi del repository
-        return null;
+    public Calendar createEvent(Calendar calendar) {
+        return calendarRepository.save(calendar);
     }
 
-    public List<CalendarEvent> getAllCalendarEvents() {
-        return null;
+    public void deleteEvent(Long id) {
+        calendarRepository.deleteById(id);
     }
 
-    // Aggiungi altri metodi del servizio necessari per la gestione del calendario
+    public List<Calendar> getAllEvents() {
+        return calendarRepository.findAll();
+    }
 }
