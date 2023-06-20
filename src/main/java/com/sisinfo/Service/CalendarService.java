@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CalendarService {
@@ -18,6 +19,10 @@ public class CalendarService {
     @Autowired
     public CalendarService(CalendarRepository calendarRepository) {
         this.calendarRepository = calendarRepository;
+    }
+
+    public Optional<Calendar> findById(Long id){
+        return calendarRepository.findById(id);
     }
 
     public Calendar createEvent(Calendar calendar) {

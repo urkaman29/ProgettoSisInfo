@@ -1,9 +1,6 @@
 package com.sisinfo.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,6 +12,8 @@ public class Event {
     @GeneratedValue
     private Long id;
 
+    private String name;
+
     @Getter
     @Setter
     private EventType event;
@@ -23,6 +22,11 @@ public class Event {
     @Setter
     @ManyToOne
     private Calendar calendar;
+
+    @Getter
+    @Setter
+    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
+    private List<Employee> employees;
 
     enum EventType {
         Festivita,
@@ -33,4 +37,19 @@ public class Event {
         Natalita,
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(Calendar calendar) {
+        this.name = calendar.getTitle();
+    }
 }
