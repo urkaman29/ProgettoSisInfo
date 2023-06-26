@@ -1,6 +1,7 @@
 package com.sisinfo.Controller;
 
 import com.sisinfo.Entity.Employee;
+import com.sisinfo.Entity.Event;
 import com.sisinfo.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,12 @@ public class EmployeeController {
     @Autowired
     public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
+    }
+
+    @GetMapping("/{employeeId}/events")
+    public List<Event> getEmployeeEvents(@PathVariable Long employeeId) {
+        Employee employee = employeeService.getEmployeeById(employeeId);
+        return employee.getEvents();
     }
 
     @GetMapping

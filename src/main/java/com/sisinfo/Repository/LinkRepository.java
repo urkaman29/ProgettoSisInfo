@@ -6,8 +6,9 @@ import com.sisinfo.Entity.Link;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface LinkRepository extends JpaRepository<Link, Long> {
-    public Employee findByEvent(Event event);
+    public Employee findByEventId(Event event);
 
     public Event findByEmployee(Employee employee);
 
+    Object findByEvent(Event event);
 }

@@ -1,10 +1,12 @@
 package com.sisinfo.Controller;
 
+import com.sisinfo.Entity.Employee;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.sisinfo.Entity.Calendar;
 import com.sisinfo.Service.CalendarService;
+
 
 import java.util.List;
 
@@ -40,5 +42,11 @@ public class CalendarController {
     @ResponseBody
     public List<Calendar> getAllEvents() {
         return calendarService.getAllEvents();
+    }
+
+    @GetMapping("/events/{eventId}/employees")
+    @ResponseBody
+    public List<Employee> getEmployeesByEventId(@PathVariable Long eventId) {
+        return calendarService.getEmployeesByEventId(eventId);
     }
 }

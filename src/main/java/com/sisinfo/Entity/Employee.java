@@ -1,15 +1,16 @@
 package com.sisinfo.Entity;
+import com.sisinfo.Entity.Event;
 
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter
     private Long id;
 
@@ -41,15 +42,27 @@ public class Employee {
     @Setter
     private int permissionHours;
 
-    @Getter
-    @Setter
-    @ManyToMany
-    List<Event> events;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Link> links;
+
+    @ManyToOne
+    private Calendar calendar;
+
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public List<Event> getEvents() {
+        List<Event> events = new ArrayList<>();
+        for (Link link : links) {
+            events.add(link.getEvent());
+        }
+        return events;
     }
 }

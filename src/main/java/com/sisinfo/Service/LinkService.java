@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,55 +26,52 @@ public class LinkService {
     @Autowired
     private EventService eventService;
 
-    public ResponseEntity<?> createLink(Link li){
-        Employee emp= employeeService.findById(li.getEmployeeId()).orElseThrow();
-        Event ev= eventService.findById(li.getEventId()).orElseThrow();
+    @Transactional
+    public ResponseEntity<?> createLink(Link link) {
+        Employee employee = employeeService.findById(link.getEmployee().getId()).orElseThrow();
+        Event event = eventService.findById(link.getEvent().getId()).orElseThrow();
 
-        LinkEmployeeEvent linked= new LinkEmployeeEvent(ev, emp);
+        link.setEvent(event);
+        link.setEmployee(employee);
+        linkRepository.save(link);
 
-        linkRepository.save(li);
-        System.out.println(ev);
-        System.out.println(emp);
-        System.out.println(linked);
+        System.out.println(event);
+        System.out.println(employee);
+        System.out.println(link);
+
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
 
-    public List<Employee> findEmployeeByEvent(Event event){
-        List<LinkEmployeeEvent> linkEmployeeEvents= (List<LinkEmployeeEvent>) linkRepository.findByEvent(event);
+    public List<Employee> findEmployeeByEvent(Event event) {
+        List<LinkEmployeeEvent> linkEmployeeEvents = (List<LinkEmployeeEvent>) linkRepository.findByEvent(event);
 
-        List<Employee> employees= new ArrayList<>();
-        for(LinkEmployeeEvent li:linkEmployeeEvents){
+        List<Employee> employees = new ArrayList<>();
+        for (LinkEmployeeEvent li : linkEmployeeEvents) {
             employees.add(li.getEmployee());
         }
         return employees;
     }
 
 
+    public List<Event> findEventByEmployee(Employee employee) {
+        List<LinkEmployeeEvent> linkEmployeeEvents = (List<LinkEmployeeEvent>) linkRepository.findByEmployee(employee);
 
-    public List<Event> findEventByEmployee(Employee employee){
-        List<LinkEmployeeEvent> linkEmployeeEvents= (List<LinkEmployeeEvent>) linkRepository.findByEmployee(employee);
-
-        List<Event> events= new ArrayList<>();
-        for(LinkEmployeeEvent ev:linkEmployeeEvents){
+        List<Event> events = new ArrayList<>();
+        for (LinkEmployeeEvent ev : linkEmployeeEvents) {
             events.add(ev.getEvent());
         }
         return events;
     }
 
-    public Link getLinkedById(Long linkId){
+    public Link getLinkedById(Long linkId) {
         return linkRepository.findById(linkId).orElse(null);
     }
 
-
-    public Link updateLink(Long linkId, LinkEmployeeEvent linkDetails ){
+    public Link updateLink(Long linkId, LinkEmployeeEvent linkDetails) {
         Link link = getLinkedById(linkId);
 
-        if (link != null){
-            link.setEmployeeId(link.getEmployeeId());
-            link.setEventId(link.getEventId());
-            return linkRepository.save(link);
-        } return null;
+        return link;
     }
-
 }
+

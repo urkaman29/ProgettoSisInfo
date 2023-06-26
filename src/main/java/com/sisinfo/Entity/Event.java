@@ -14,28 +14,17 @@ public class Event {
 
     private String name;
 
+    @Enumerated(EnumType.STRING)
     @Getter
     @Setter
-    private EventType event;
+    private EventType eventType;
 
-    @Getter
-    @Setter
     @ManyToOne
     private Calendar calendar;
 
-    @Getter
-    @Setter
-    @ManyToMany(mappedBy = "events", fetch = FetchType.LAZY)
-    private List<Employee> employees;
-
-    enum EventType {
-        Festivita,
-        Permesso,
-        Ferie,
-        Malattia,
-        Lutto,
-        Natalita,
-    }
+    @ManyToMany
+    @JoinTable
+    private List<Event> events;
 
     public Long getId() {
         return id;
@@ -49,7 +38,32 @@ public class Event {
         return name;
     }
 
-    public void setName(Calendar calendar) {
-        this.name = calendar.getTitle();
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public EventType getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(EventType eventType) {
+        this.eventType = eventType;
+    }
+
+    public Calendar getCalendar() {
+        return calendar;
+    }
+
+    public void setCalendar(Calendar calendar) {
+        this.calendar = calendar;
+    }
+
+    public enum EventType {
+        Festivita,
+        Permesso,
+        Ferie,
+        Malattia,
+        Lutto,
+        Natalita
     }
 }

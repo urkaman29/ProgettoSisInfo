@@ -37,24 +37,14 @@ public class EventController {
     }
 
     @GetMapping("/{eventid}")
-    public ResponseEntity<?> getEventById(@RequestBody @PathVariable("id") Long eventid) {
-        Event event = eventService.getEventById(eventid);
+    public ResponseEntity<?> getEventById(@PathVariable("eventid") Long eventId) {
+        Event event = eventService.getEventById(eventId);
 
-        if(event != null){
-           Employee employee= employeeService.getEmployeeDTO(event.getEmployees().get(0).getId());
-           event.setEmployees(Collections.singletonList(employee));
-           return ResponseEntity.ok(event);
-        }else{
-            return ResponseEntity.notFound().build();
-        }
-
-       /* if (progetto != null) {
-            Versione versione = versioneService.getVersione(progetto.getVersioniCorrenti().get(0).getId());
-            progetto.setVersioniCorrenti(Collections.singletonList(versione)); // Aggiorna la lista delle versioni correnti con la versione recuperata
-            return ResponseEntity.ok(progetto);
+        if (event != null) {
+            return ResponseEntity.ok(event);
         } else {
             return ResponseEntity.notFound().build();
-        }*/
+        }
     }
 
     @PutMapping("/{id}")

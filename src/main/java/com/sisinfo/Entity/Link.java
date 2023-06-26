@@ -1,26 +1,42 @@
 package com.sisinfo.Entity;
 
+import jakarta.persistence.*;
+
+@Entity
 public class Link {
 
-    Long employeeId;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-    Long eventId;
 
-    public Long getEmployeeId() {
-        return employeeId;
+
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private Event event;
+
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+
+
+    public Long getId() {
+        return id;
     }
 
-    public void setEmployeeId(Long employeeId) {
-        this.employeeId = employeeId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public Long getEventId() {
-        return eventId;
+    public Event getEvent() {
+        return event;
     }
 
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
+    public void setEvent(Event event) {
+        this.event = event;
     }
+
+    public Employee getEmployee() { return employee; }
+
+    public void setEmployee(Employee employee) { this.employee = employee; }
 }
-
-

@@ -13,7 +13,9 @@ import java.util.Optional;
 
 @Service
 public class EventService {
+
     private final EventRepository eventRepository;
+
     @Autowired
     private CalendarRepository calendarRepository;
 
@@ -22,7 +24,7 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public Optional<Event> findById(Long id){
+    public Optional<Event> findById(Long id) {
         return eventRepository.findById(id);
     }
 
@@ -30,39 +32,46 @@ public class EventService {
     public Event createEvent(Long eventId) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Evento non trovato con id:" + eventId));
-        return eventRepository.save(event);
+
+        Calendar calendar = calendarRepository.findByEvent(event);
+        validateUniqueDailyEvent(event.getName(), calendar);
+
+        calendar.setEvent(event);
+        return event;
     }
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
     }
 
-    public Event getEventById(Long id) {
-        Optional<Event> optionalEvent = eventRepository.findById(id);
+    public void deleteEvent(Long id) {
+        eventRepository.deleteById(id);
+    }
+
+    private void validateUniqueDailyEvent(String name, Calendar calendar) {
+        Event existingEvent = eventRepository.findByNameAndCalendar(name, calendar);
+        if (existingEvent != null) {
+            throw new RuntimeException("Un evento con il nome: " + calendar.getTitle() + " è stato già fissato per quel giorno");
+        }
+    }
+
+    public Event getEventById(Long eventId) {
+        Optional<Event> optionalEvent = eventRepository.findById(eventId);
         return optionalEvent.orElse(null);
     }
 
-    public Event updateEvent(Long eventId, Event EventDetails) {
-         Event event = getEventById(eventId);
-            validateUniqueDailyEvent(event.getName(), event.getCalendar());
+    public Event updateEvent(Long id, Event eventDetails) {
+        Event event = eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento non trovato con id: " + id));
 
-            Calendar calendar= calendarRepository.findByEvent(event);
-            calendar.setEvent(EventDetails);
-        return null;
-        }
+        // Aggiorna i dettagli dell'evento con i nuovi valori
+        event.setName(eventDetails.getName());
 
+        // Salva l'evento aggiornato nel repository
+        eventRepository.save(event);
 
-    public void deleteEvent(Long id) {
-            eventRepository.deleteById(id);
+        return event;
     }
 
 
-    private void validateUniqueDailyEvent(String name, Calendar event){
-        Event existingEvent= eventRepository.findByNameAndCalendar(name, event);
-        if(existingEvent != null){
-            throw new RuntimeException("Un evento con il nome: "+ event.getTitle() + " è stato già fissato per quel giorno");
-        }
-
-    }
 }
-
