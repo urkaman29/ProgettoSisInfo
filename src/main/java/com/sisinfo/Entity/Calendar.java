@@ -25,27 +25,29 @@ public class Calendar {
     @Setter
     private LocalDateTime endDateTime;
 
-    @OneToOne
-    private Event event;
+    @OneToMany(mappedBy = "calendar")
+    private List<Event> events;
 
     @OneToMany(mappedBy = "calendar")
     private List<Employee> employees;
 
+
     public Calendar() {}
 
-    public Calendar(String title, LocalDateTime startDateTime, LocalDateTime endDateTime, Event event) {
+    public Calendar(String title, LocalDateTime startDateTime, LocalDateTime endDateTime) {
         this.title = title;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
-        this.event = event;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
+
+    public List<Event> getEvents() {
+        return events;
     }
 
     public List<Employee> getEmployees() {
         return employees;
     }
+
 
 }

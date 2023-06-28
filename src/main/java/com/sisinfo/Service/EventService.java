@@ -33,12 +33,16 @@ public class EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Evento non trovato con id:" + eventId));
 
-        Calendar calendar = calendarRepository.findByEvent(event);
-        validateUniqueDailyEvent(event.getName(), calendar);
+        List<Calendar> calendars = calendarRepository.findAll(); // Ottieni tutti i calendari
 
-        calendar.setEvent(event);
+        for (Calendar calendar : calendars) {
+            validateUniqueDailyEvent(event.getName(), calendar);
+            calendar.getEvents().add(event); // Aggiungi l'evento al calendario
+        }
+
         return event;
     }
+
 
     public List<Event> getAllEvents() {
         return eventRepository.findAll();

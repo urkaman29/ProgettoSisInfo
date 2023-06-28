@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,10 +22,6 @@ public class Event {
 
     @ManyToOne
     private Calendar calendar;
-
-    @ManyToMany
-    @JoinTable
-    private List<Event> events;
 
     public Long getId() {
         return id;
@@ -50,8 +47,10 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public Calendar getCalendar() {
-        return calendar;
+    public List<Calendar> getCalendars() {
+        List<Calendar> calendars = new ArrayList<>();
+        calendars.add(calendar);
+        return calendars;
     }
 
     public void setCalendar(Calendar calendar) {

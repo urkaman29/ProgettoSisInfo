@@ -42,11 +42,8 @@ public class Employee {
     @Setter
     private int permissionHours;
 
-
-    @OneToMany(mappedBy = "employee")
-    private List<Link> links;
-
     @ManyToOne
+    @JoinColumn(name = "calendar_id")
     private Calendar calendar;
 
 
@@ -60,9 +57,13 @@ public class Employee {
 
     public List<Event> getEvents() {
         List<Event> events = new ArrayList<>();
-        for (Link link : links) {
-            events.add(link.getEvent());
+        if (calendar != null) {
+            events.addAll(calendar.getEvents());
         }
         return events;
+    }
+
+    public Calendar getCalendar(){
+        return calendar;
     }
 }

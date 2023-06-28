@@ -2,11 +2,13 @@ package com.sisinfo.Service;
 
 import com.sisinfo.Entity.Calendar;
 import com.sisinfo.Entity.Employee;
+import com.sisinfo.Entity.Event;
 import com.sisinfo.Repository.CalendarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import com.sisinfo.Repository.EventRepository;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,11 +35,21 @@ public class CalendarService {
         return calendarRepository.findAll();
     }
 
+    @Autowired
+    private EventRepository eventRepository;
+
     public List<Employee> getEmployeesByEventId(Long eventId) {
-        Optional<Calendar> calendar = calendarRepository.findById(eventId);
-        if (calendar.isPresent()) {
-            return calendar.get().getEmployees();
+
+        Optional<Event> event = eventRepository.findById(eventId);
+        if (event.isPresent()) {
+            List<Calendar> calendars = event.get().getCalendars();
+            List<Employee> employees = new ArrayList<>();
+            for (Calendar calendar : calendars) {
+                employees.addAll(calendar.getEmployees());
+            }
+            return employees;
         }
         return null;
     }
+
 }
