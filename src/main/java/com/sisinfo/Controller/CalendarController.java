@@ -47,4 +47,7 @@ public class CalendarController {
     public List<Employee> getEmployeesByEventId(@PathVariable Long eventId) {
         return calendarService.getEmployeesByEventId(eventId);
     }
+    @GetMapping("/{calendarID}")
+    @ResponseBody
+    public Calendar getCalendarById(@PathVariable Long id){return calendarService.getCalendarById(id);}
 }

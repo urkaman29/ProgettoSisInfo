@@ -5,7 +5,6 @@ import com.sisinfo.Repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -25,10 +24,6 @@ public class EmployeeService {
                 .orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
-    public Optional<Employee> findById(Long id){
-        return employeeRepository.findById(id);
-    }
-
     public Employee getEmployeeDTO(Long id){
         Employee employee= getEmployeeById(id);
         Employee dto= new Employee();
@@ -38,6 +33,19 @@ public class EmployeeService {
         dto.setTelephone(employee.getTelephone());
         return dto;
     }
+
+    public Employee getEmployeeByName(String name) {
+        List<Employee> employees = employeeRepository.findAll();
+
+        for (Employee employee : employees) {
+            if (employee.getName().equals(name)) {
+                return getEmployeeDTO(employee.getId());
+            }
+        }
+
+        throw new IllegalArgumentException("Employee not found");
+    }
+
 
     public Employee createEmployee(Employee employee) {
         return employeeRepository.save(employee);

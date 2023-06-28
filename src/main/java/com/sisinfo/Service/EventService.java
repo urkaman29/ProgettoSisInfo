@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EventService {
@@ -24,8 +23,8 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
-    public Optional<Event> findById(Long id) {
-        return eventRepository.findById(id);
+    public Event findById(Long id) {
+        return eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
     @Transactional
@@ -33,11 +32,11 @@ public class EventService {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new RuntimeException("Evento non trovato con id:" + eventId));
 
-        List<Calendar> calendars = calendarRepository.findAll(); // Ottieni tutti i calendari
+        List<Calendar> calendars = calendarRepository.findAll();
 
         for (Calendar calendar : calendars) {
             validateUniqueDailyEvent(event.getName(), calendar);
-            calendar.getEvents().add(event); // Aggiungi l'evento al calendario
+            calendar.getEvents().add(event);
         }
 
         return event;
@@ -59,19 +58,13 @@ public class EventService {
         }
     }
 
-    public Event getEventById(Long eventId) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
-        return optionalEvent.orElse(null);
-    }
 
     public Event updateEvent(Long id, Event eventDetails) {
         Event event = eventRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Evento non trovato con id: " + id));
 
-        // Aggiorna i dettagli dell'evento con i nuovi valori
         event.setName(eventDetails.getName());
 
-        // Salva l'evento aggiornato nel repository
         eventRepository.save(event);
 
         return event;

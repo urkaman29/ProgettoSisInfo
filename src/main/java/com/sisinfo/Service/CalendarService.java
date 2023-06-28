@@ -52,4 +52,7 @@ public class CalendarService {
         return null;
     }
 
+    public Calendar getCalendarById(Long id) {
+       return calendarRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
+    }
 }

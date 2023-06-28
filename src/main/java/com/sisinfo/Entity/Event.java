@@ -39,22 +39,10 @@ public class Event {
         this.name = name;
     }
 
-    public EventType getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(EventType eventType) {
-        this.eventType = eventType;
-    }
-
     public List<Calendar> getCalendars() {
         List<Calendar> calendars = new ArrayList<>();
         calendars.add(calendar);
         return calendars;
-    }
-
-    public void setCalendar(Calendar calendar) {
-        this.calendar = calendar;
     }
 
     public enum EventType {
