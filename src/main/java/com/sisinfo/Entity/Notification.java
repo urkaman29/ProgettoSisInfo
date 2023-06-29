@@ -1,31 +1,31 @@
 package com.sisinfo.Entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "Notification")
 public class Notification {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
     private Employee employee;
-
-    @Getter
-    @Setter
+    @Column(name = "message", nullable = false)
     private String message;
-
-    @Getter
-    @Setter
+    @Column(name = "date", nullable = false)
     private LocalDateTime date;
-
-    @Getter
-    @Setter
+    @Column(name = "read", nullable = false)
     private boolean read;
 
 }

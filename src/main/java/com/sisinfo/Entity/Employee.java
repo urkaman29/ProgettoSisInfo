@@ -1,4 +1,5 @@
 package com.sisinfo.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,6 +30,8 @@ public class Employee {
     private int vacationHours;
     @Column(name = "permissionHours", nullable = false)
     private int permissionHours;
+
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
