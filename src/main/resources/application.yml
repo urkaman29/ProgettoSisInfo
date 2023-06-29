@@ -1,0 +1,16 @@
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/SecurityPneuservice
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+server:
+  port: 5431
+
+  jwt:
+    auth:
+      converter:
+        principle-attribute: preferred-username
+        resource-id: client_rest_api
