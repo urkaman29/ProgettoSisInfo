@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/employees")
 public class EmployeeController {
     @Autowired
-    private  EmployeeService employeeService;
+    private EmployeeService employeeService;
 
     @GetMapping
     public List<Employee> getAllEmployees() {
@@ -22,13 +22,19 @@ public class EmployeeController {
         return employeeService.getEmployeeDTO(id);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/name/{name}")
     public Employee getEmployeeByName(@PathVariable String name) {
         return employeeService.getEmployeeByName(name);
     }
 
     @PostMapping
     public Employee createEmployee(@RequestBody Employee employee) {
+        // Check if an employee with the same email, name, or telephone already exists
+        if (employeeService.existsByEmail(employee.getEmail()) ||
+                employeeService.existsByTelephone(employee.getTelephone())) {
+            throw new IllegalArgumentException("An employee with the same email, name, or telephone already exists.");
+        }
+
         return employeeService.createEmployee(employee);
     }
 
