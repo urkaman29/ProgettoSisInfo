@@ -1,69 +1,36 @@
 package com.sisinfo.Entity;
-import com.sisinfo.Entity.Event;
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "Employee")
 public class Employee {
     @Id
-    @Getter
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-
-    @Getter
-    @Setter
+    @Column(name = "name", nullable = false)
     private String name;
-
-    @Getter
-    @Setter
+    @Column(name = "telephone", nullable = false)
     private int telephone;
-
-    @Getter
-    @Setter
+    @Column(name = "email", nullable = false)
     private String email;
-
-    @Getter
-    @Setter
+    @Column(name = "baseSalary", nullable = false)
     private double baseSalary;
-
-    @Getter
-    @Setter
+    @Column(name = "workedHours", nullable = false)
     private int workedHours;
-
-    @Getter
-    @Setter
+    @Column(name = "vacationHours", nullable = false)
     private int vacationHours;
-
-    @Getter
-    @Setter
+    @Column(name = "permissionHours", nullable = false)
     private int permissionHours;
-
     @ManyToOne
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public List<Event> getEvents() {
-        List<Event> events = new ArrayList<>();
-        if (calendar != null) {
-            events.addAll(calendar.getEvents());
-        }
-        return events;
-    }
-
-    public Calendar getCalendar(){
-        return calendar;
-    }
 }

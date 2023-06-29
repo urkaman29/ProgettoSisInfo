@@ -1,28 +1,27 @@
 package com.sisinfo.Entity;
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "Calendar")
 public class Calendar {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
-
-    @Getter
-    @Setter
+    @Column(name = "title", nullable = false)
     private String title;
-
-    @Getter
-    @Setter
+    @Column(name = "startTime", nullable = false)
     private LocalDateTime startDateTime;
-
-    @Getter
-    @Setter
+    @Column(name = "endTime", nullable = false)
     private LocalDateTime endDateTime;
 
     @OneToMany(mappedBy = "calendar")
@@ -31,23 +30,6 @@ public class Calendar {
     @OneToMany(mappedBy = "calendar")
     private List<Employee> employees;
 
-
-    public Calendar() {}
-
-    public Calendar(String title, LocalDateTime startDateTime, LocalDateTime endDateTime) {
-        this.title = title;
-        this.startDateTime = startDateTime;
-        this.endDateTime = endDateTime;
-    }
-
-
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public List<Employee> getEmployees() {
-        return employees;
-    }
 
 
 }

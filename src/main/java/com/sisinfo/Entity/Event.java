@@ -1,49 +1,27 @@
 package com.sisinfo.Entity;
-
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 @Entity
+@Table(name = "Event")
 public class Event {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column(name = "name", nullable = false)
     private String name;
-
+    @Column(name = "Type", nullable = false)
     @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
     private EventType eventType;
-
     @ManyToOne
     private Calendar calendar;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public List<Calendar> getCalendars() {
-        List<Calendar> calendars = new ArrayList<>();
-        calendars.add(calendar);
-        return calendars;
-    }
 
     public enum EventType {
         Festivita,

@@ -42,12 +42,8 @@ public class CalendarService {
 
         Optional<Event> event = eventRepository.findById(eventId);
         if (event.isPresent()) {
-            List<Calendar> calendars = event.get().getCalendars();
-            List<Employee> employees = new ArrayList<>();
-            for (Calendar calendar : calendars) {
-                employees.addAll(calendar.getEmployees());
-            }
-            return employees;
+            Calendar calendar = event.get().getCalendar();
+            return calendar.getEmployees();
         }
         return null;
     }

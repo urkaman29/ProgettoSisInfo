@@ -18,9 +18,7 @@ import java.util.List;
 public class EventController {
     @Autowired
     private EventService eventService;
-    @Autowired
-    private EmployeeService employeeService;
-
+    
     @Autowired
     public EventController(EventService eventService) {
         this.eventService = eventService;
@@ -37,14 +35,10 @@ public class EventController {
     }
 
     @GetMapping("/{eventid}")
-    public Event getEventById(@PathVariable("eventid") Long eventId) {
-        return eventService.findById(eventId);
-    }
+    public Event getEventById(@PathVariable("eventid") Long eventId) {return eventService.findById(eventId);}
 
     @PutMapping("/{id}")
-    public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
-        return eventService.updateEvent(id, event);
-    }
+    public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {return eventService.updateEvent(id, event);}
 
     @DeleteMapping("/{id}")
     public void deleteEvent(@PathVariable Long id) {
