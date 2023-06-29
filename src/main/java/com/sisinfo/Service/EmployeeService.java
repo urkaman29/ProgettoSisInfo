@@ -34,7 +34,6 @@ public class EmployeeService {
         return dto;
     }
 
-
     public Employee getEmployeeByName(String name) {
         List<Employee> employees = employeeRepository.findAll();
 
@@ -47,6 +46,13 @@ public class EmployeeService {
         throw new IllegalArgumentException("Employee not found");
     }
 
+    public boolean existsByEmail(String email) {
+        return employeeRepository.existsByEmail(email);
+    }
+
+    public boolean existsByTelephone(long telephone) {
+        return employeeRepository.existsByTelephone(telephone);
+    }
 
     public Employee createEmployee(Employee employee) {
         return employeeRepository.save(employee);

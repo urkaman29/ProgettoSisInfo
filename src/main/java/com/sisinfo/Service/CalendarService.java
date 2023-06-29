@@ -18,10 +18,6 @@ public class CalendarService {
     @Autowired
     private CalendarRepository calendarRepository;
 
-    public Optional<Calendar> findById(Long id) {
-        return calendarRepository.findById(id);
-    }
-
     @Transactional
     public Calendar createEvent(Calendar calendar) {
         return calendarRepository.save(calendar);
