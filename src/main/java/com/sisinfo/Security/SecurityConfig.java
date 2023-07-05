@@ -12,6 +12,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import prova.authentication.JwtAuthConverter;
 
 @Configuration
 @EnableWebSecurity
@@ -28,10 +29,12 @@ public class SecurityConfig{
                 .authorizeHttpRequests((auth)->
                         auth
                                 .requestMatchers("/register/**").permitAll()
+                                .requestMatchers("/employees/**").permitAll()
+                                //Da aggiungere ogni
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(new JwtAuthenticationConverter());
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().oauth2ResourceServer().jwt().jwtAuthenticationConverter(new JwtAuthConverter());
         http.httpBasic(Customizer.withDefaults());
         return http.build();
     }

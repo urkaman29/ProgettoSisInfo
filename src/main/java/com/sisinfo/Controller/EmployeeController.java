@@ -30,8 +30,9 @@ public class EmployeeController {
         return employeeService.getEmployeeByName(name);
     }
 
-    @PreAuthorize ("hasRole('client admin')")
+
     @PostMapping
+    @PreAuthorize("hasRole('client_admin')")
     public Employee createEmployee(@RequestBody Employee employee) {
         // Check if an employee with the same email, name, or telephone already exists
         if (employeeService.existsByEmail(employee.getEmail()) ||
