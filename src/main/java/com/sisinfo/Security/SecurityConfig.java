@@ -12,7 +12,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import prova.authentication.JwtAuthConverter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +29,9 @@ public class SecurityConfig{
                         auth
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/employees/**").permitAll()
+                                .requestMatchers("/calendar**").permitAll()
+                                .requestMatchers("/events/**").permitAll()
+                                .requestMatchers("/notifications/**").permitAll()
                                 //Da aggiungere ogni
                                 .anyRequest().authenticated()
                 )

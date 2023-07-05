@@ -22,7 +22,7 @@ public class addUsersKeycloak {
 
     String usernameAdmin = "utente";
     String passwordAdmin = "admin";
-    String role = "admin";
+    String role = "user";
     String serverUrl = "http://localhost:8080";
     String realm = "SiSecurity";
     String clientId = "client_rest_api";
