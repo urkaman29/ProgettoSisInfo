@@ -1,6 +1,8 @@
 package com.sisinfo.Entity;
+
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -17,19 +19,20 @@ public class Calendar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
-    @Column(name = "title", nullable = false)
-    private String title;
-    @Column(name = "startTime", nullable = false)
-    private LocalDateTime startDateTime;
-    @Column(name = "endTime", nullable = false)
-    private LocalDateTime endDateTime;
+
+    @Column(name = "weekStartDate", nullable = false)
+    private LocalDateTime weekStartDate;
+
+    @Column(name = "weekEndDate", nullable = false)
+    private LocalDateTime weekEndDate;
+
+    @OneToMany(mappedBy = "calendar")
+    private List<Day> days;
 
     @OneToMany(mappedBy = "calendar")
     private List<Event> events;
 
     @OneToMany(mappedBy = "calendar")
     private List<Employee> employees;
-
-
-
 }
+

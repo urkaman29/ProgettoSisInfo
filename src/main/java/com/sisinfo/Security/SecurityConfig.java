@@ -29,9 +29,6 @@ public class SecurityConfig{
                         auth
                                 .requestMatchers("/register/**").permitAll()
                                 .requestMatchers("/employees/**").permitAll()
-                                .requestMatchers("/calendar**").permitAll()
-                                .requestMatchers("/events/**").permitAll()
-                                .requestMatchers("/notifications/**").permitAll()
                                 //Da aggiungere ogni
                                 .anyRequest().authenticated()
                 )
