@@ -54,9 +54,11 @@ public class EventService {
     private void validateUniqueDailyEvent(String name, Calendar calendar) {
         Event existingEvent = eventRepository.findByNameAndCalendar(name, calendar);
         if (existingEvent != null) {
-            throw new RuntimeException("Un evento con il nome: " + calendar.getTitle() + " è stato già fissato per quel giorno");
+            throw new RuntimeException("Un evento con il nome: " + name + " è stato già fissato per quel giorno");
         }
     }
+
+
 
 
     public Event updateEvent(Long id, Event eventDetails) {
