@@ -29,7 +29,7 @@ public class Calendar {
     @OneToMany(mappedBy = "calendar")
     private List<Day> days;
 
-    @OneToMany(mappedBy = "employee_id")
+    @OneToMany(mappedBy = "calendar")
     private List<Employee> employees;
 }
 

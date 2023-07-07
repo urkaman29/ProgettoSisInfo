@@ -27,6 +27,11 @@ public class Event {
     @JoinColumn(name = "day_id")
     private Day day;
 
+    @ManyToOne
+    @JoinColumn(name = "calendar_id")
+    private Calendar calendar;
+
+
 
     public enum EventType {
         Lavoro,
