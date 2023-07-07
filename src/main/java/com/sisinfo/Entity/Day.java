@@ -1,13 +1,23 @@
-package com.sisinfo.Entity;
-
+package com.sisinfo.Entity;// Day.java
+import com.sisinfo.Entity.Calendar;
+import com.sisinfo.Entity.Event;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "Day")
 public class Day {
+    private static final int MAX_EVENTS = 2;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -20,6 +30,11 @@ public class Day {
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
-    @OneToMany(mappedBy = "day")
-    private List<TimeSlot> timeSlots;
+    @OneToOne(mappedBy = "day", cascade = CascadeType.ALL)
+    private Event mattina;
+
+    @OneToOne(mappedBy = "day", cascade = CascadeType.ALL)
+    private Event pomeriggio;
+
+
 }
