@@ -25,12 +25,6 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @PreAuthorize("hasRole('client_admin')")
-    @PostMapping()
-    public Event createEvent(@RequestBody Event event) {
-        return eventService.createEvent(event.getId());
-    }
-
     @PreAuthorize("hasRole('client_user')")
     @GetMapping("/events")
     public List<Event> getAllEvents() {

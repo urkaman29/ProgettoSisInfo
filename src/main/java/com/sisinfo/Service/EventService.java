@@ -6,9 +6,10 @@ import com.sisinfo.Repository.CalendarRepository;
 import com.sisinfo.Repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService {
@@ -27,24 +28,13 @@ public class EventService {
         return eventRepository.findById(id).orElseThrow(() -> new RuntimeException("Employee not found with id: " + id));
     }
 
-    @Transactional
-    public Event createEvent(Long eventId) {
-        Event event = eventRepository.findById(eventId)
-                .orElseThrow(() -> new RuntimeException("Evento non trovato con id:" + eventId));
-
-        List<Calendar> calendars = calendarRepository.findAll();
-
-        for (Calendar calendar : calendars) {
-            validateUniqueDailyEvent(event.getName(), calendar);
-            calendar.getEvents().add(event);
-        }
-
-        return event;
-    }
-
-
     public List<Event> getAllEvents() {
         return eventRepository.findAll();
+    }
+
+    public Event getEventById(@RequestParam Long id) {
+        return eventRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Evento non trovato con id: " + id));
     }
 
     public void deleteEvent(Long id) {
@@ -57,9 +47,6 @@ public class EventService {
             throw new RuntimeException("Un evento con il nome: " + name + " è stato già fissato per quel giorno");
         }
     }
-
-
-
 
     public Event updateEvent(Long id, Event eventDetails) {
         Event event = eventRepository.findById(id)

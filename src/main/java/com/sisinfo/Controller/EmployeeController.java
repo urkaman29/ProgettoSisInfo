@@ -24,10 +24,22 @@ public class EmployeeController {
         return employeeService.getEmployeeDTO(id);
     }
 
-    @PreAuthorize ("hasRole('client admin')")
-    @GetMapping("/name/{name}")
-    public Employee getEmployeeByName(@PathVariable String name) {
-        return employeeService.getEmployeeByName(name);
+    @PreAuthorize("hasRole('client admin')")
+    @GetMapping("/{identifier}")
+    public Employee getEmployeeByIdentifier(@PathVariable String identifier) {
+        if (identifier.matches("\\d+")) { // Se l'identificatore è un numero, assume che sia un ID
+            Long id = Long.parseLong(identifier);
+            return employeeService.getEmployeeById(id);
+        } else if (identifier.contains("@")) { // Se l'identificatore contiene una @, assume che sia un'email
+            return employeeService.getEmployeeByEmail(identifier);
+        } else { // Altrimenti, assume che sia il nome
+            return employeeService.getEmployeeByName(identifier);
+        }
+    }
+
+    @GetMapping("/worked-hours/{employeeId}")
+    public int getBaseSalary(@PathVariable Long employeeId) {
+        return employeeService.getBaseSalary(employeeId);
     }
 
 
@@ -48,6 +60,13 @@ public class EmployeeController {
     public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
         return employeeService.updateEmployee(id, employee);
     }
+
+
+    @PutMapping
+    public Employee updateSalaryEmployee(@RequestBody Employee employee) {
+        return employeeService.updateEmployeeSalary(employee);
+    }
+
 
     @PreAuthorize ("hasRole('client admin')")
     @DeleteMapping("/{id}")

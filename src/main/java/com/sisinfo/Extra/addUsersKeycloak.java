@@ -22,13 +22,13 @@ public class addUsersKeycloak {
 
     String usernameAdmin = "utente";
     String passwordAdmin = "admin";
-    String role = "user";
+    //String role = "user";
     String serverUrl = "http://localhost:8080";
     String realm = "SiSecurity";
     String clientId = "client_rest_api";
 
 
-    public void addUser(String name,String mail, String password) {
+    public void addUser(String name,String mail, String password, String role) {
         Keycloak keycloak = KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
                 .realm(realm)

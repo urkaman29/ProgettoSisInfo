@@ -14,14 +14,17 @@ import java.util.Random;
 public class RegistrationController {
 
     @PostMapping("/new")
-    public ResponseEntity<String> registerEmployee(@RequestParam (name = "name") String name, @RequestParam (name= "email") String email) {
-        String password = generateRandomPassword();
+    public ResponseEntity<String> registerEmployee(@RequestParam (name = "name") String name,
+                                                   @RequestParam (name= "email") String email,
+                                                   @RequestParam (name= "password") String password,
+                                                   @RequestParam(name = "role") String role){
+        //String password = generateRandomPassword();
         addUsersKeycloak keycloakManager = new addUsersKeycloak();
-        keycloakManager.addUser(name, email, password); // Aggiunge l'utente a Keycloak
+        keycloakManager.addUser(name, email, password, role); // Aggiunge l'utente a Keycloak
         return new ResponseEntity<>("L'utente è stato registrato con successo!", HttpStatus.OK);
     }
 
-    private String generateRandomPassword() {
+    /*private String generateRandomPassword() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder password = new StringBuilder();
         Random random = new Random();
@@ -32,5 +35,5 @@ public class RegistrationController {
             password.append(characters.charAt(index));
         }
         return password.toString();
-    }
+    }*/
 }

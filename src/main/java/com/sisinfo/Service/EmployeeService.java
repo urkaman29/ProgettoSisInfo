@@ -34,6 +34,24 @@ public class EmployeeService {
         return dto;
     }
 
+    public Employee getEmployeeDTO2(Long id){
+        Employee employee= getEmployeeById(id);
+        Employee dto= new Employee();
+        dto.setName(employee.getName());
+        dto.setEmail(employee.getEmail());
+        dto.setTelephone(employee.getTelephone());
+        return dto;
+    }
+    public Employee getEmployeeDTO3(Long id){
+        Employee employee= getEmployeeById(id);
+        Employee dto= new Employee();
+        dto.setId(employee.getId());
+        dto.setName(employee.getName());
+        dto.setBaseSalary(employee.getBaseSalary());
+        dto.setWorkedHours(employee.getWorkedHours());
+        return dto;
+    }
+
     public Employee getEmployeeByName(String name) {
         List<Employee> employees = employeeRepository.findAll();
 
@@ -48,6 +66,14 @@ public class EmployeeService {
 
     public boolean existsByEmail(String email) {
         return employeeRepository.existsByEmail(email);
+    }
+
+    public Employee getEmployeeByEmail(String email) {
+        return employeeRepository.findByEmail(email);
+    }
+
+    public Employee getEmployeeByTelephone(long telephone) {
+        return employeeRepository.findByTelephone(telephone);
     }
 
     public boolean existsByTelephone(long telephone) {
@@ -69,6 +95,22 @@ public class EmployeeService {
         existingEmployee.setPermissionHours(employee.getPermissionHours());
         return employeeRepository.save(existingEmployee);
     }
+
+    public Employee updateEmployeeSalary(Employee employee) {
+        Employee existingEmployee = employeeRepository.findById(employee.getId())
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + employee.getId()));
+
+        existingEmployee.setBaseSalary(employee.getBaseSalary());
+        return employeeRepository.save(existingEmployee);
+    }
+
+    public int getBaseSalary(Long employeeId) {
+        Employee employee = employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found with ID: " + employeeId));
+
+        return (int) employee.getBaseSalary();
+    }
+
 
     public void deleteEmployee(Long id) {
         employeeRepository.deleteById(id);

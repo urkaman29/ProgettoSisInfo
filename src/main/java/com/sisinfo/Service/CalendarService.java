@@ -18,7 +18,7 @@ public class CalendarService {
     @Autowired
     private CalendarRepository calendarRepository;
 
-    @Transactional
+
     public Calendar createEvent(Calendar calendar) {
         return calendarRepository.save(calendar);
     }
@@ -38,7 +38,7 @@ public class CalendarService {
 
         Optional<Event> event = eventRepository.findById(eventId);
         if (event.isPresent()) {
-            Calendar calendar = event.get().getCalendar();
+            Calendar calendar = event.get().getDay().getCalendar();
             return calendar.getEmployees();
         }
         return null;
@@ -46,5 +46,22 @@ public class CalendarService {
 
     public Calendar getCalendarById(Long id) {
        return calendarRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
+    }
+
+    public Calendar updateCalendar(Long id, Calendar calendar) {
+        Optional<Calendar> existingCalendar = calendarRepository.findById(id);
+
+        if (existingCalendar.isPresent()) {
+            Calendar updatedCalendar = existingCalendar.get();
+
+            updatedCalendar.setDays(calendar.getDays());
+            updatedCalendar.setEmployees(calendar.getEmployees());
+            updatedCalendar.setWeekStartDate(calendar.getWeekStartDate());
+            updatedCalendar.setWeekEndDate(calendar.getWeekEndDate());
+
+            return calendarRepository.save(updatedCalendar);
+        } else {
+            throw new IllegalArgumentException("Calendario non trovato per l'ID: " + id);
+        }
     }
 }
