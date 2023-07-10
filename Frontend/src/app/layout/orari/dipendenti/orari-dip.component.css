@@ -1,0 +1,30 @@
+.calendario {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons {
+    margin-bottom: 10px;
+}
+
+.calendar {
+    display: flex;
+    justify-content: center; /* Aggiunto per centrare la griglia */
+}
+
+.giorno-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    max-width: 600px; /* Aggiunto per limitare la larghezza della griglia */
+    margin-top: 20px; /* Aggiunto per spaziare la griglia dal resto del contenuto */
+}
+
+.giorno {
+    text-align: center;
+    padding: 10px;
+    background-color: #ffffff;
+    border: 1px solid #f5f5f5;
+}
+

@@ -1,10 +1,11 @@
 package com.sisinfo.Entity;// Day.java
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -31,6 +32,4 @@ public class Day {
 
     @OneToOne(mappedBy = "day", cascade = CascadeType.ALL)
     private Event pomeriggio;
-
-
 }

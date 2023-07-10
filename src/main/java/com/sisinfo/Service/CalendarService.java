@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.sisinfo.Repository.EventRepository;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,7 +18,6 @@ public class CalendarService {
 
     @Autowired
     private CalendarRepository calendarRepository;
-
 
     public Calendar createEvent(Calendar calendar) {
         return calendarRepository.save(calendar);
@@ -35,33 +35,32 @@ public class CalendarService {
     private EventRepository eventRepository;
 
     public List<Employee> getEmployeesByEventId(Long eventId) {
+        var event = eventRepository.findById(eventId);
 
-        Optional<Event> event = eventRepository.findById(eventId);
-        if (event.isPresent()) {
-            Calendar calendar = event.get().getDay().getCalendar();
-            return calendar.getEmployees();
-        }
-        return null;
+        return event
+                .map(value -> value.getDay().getCalendar().getEmployees())
+                .orElse(null);
+
     }
 
     public Calendar getCalendarById(Long id) {
-       return calendarRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
+        return calendarRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Calendar not found"));
     }
 
     public Calendar updateCalendar(Long id, Calendar calendar) {
-        Optional<Calendar> existingCalendar = calendarRepository.findById(id);
+        var existingCalendar = calendarRepository.findById(id);
 
-        if (existingCalendar.isPresent()) {
-            Calendar updatedCalendar = existingCalendar.get();
-
-            updatedCalendar.setDays(calendar.getDays());
-            updatedCalendar.setEmployees(calendar.getEmployees());
-            updatedCalendar.setWeekStartDate(calendar.getWeekStartDate());
-            updatedCalendar.setWeekEndDate(calendar.getWeekEndDate());
-
-            return calendarRepository.save(updatedCalendar);
-        } else {
+        if (existingCalendar.isEmpty()) {
             throw new IllegalArgumentException("Calendario non trovato per l'ID: " + id);
         }
+
+        var updatedCalendar = existingCalendar.get();
+
+        updatedCalendar.setDays(calendar.getDays());
+        updatedCalendar.setEmployees(calendar.getEmployees());
+        updatedCalendar.setWeekStartDate(calendar.getWeekStartDate());
+        updatedCalendar.setWeekEndDate(calendar.getWeekEndDate());
+
+        return calendarRepository.save(updatedCalendar);
     }
 }

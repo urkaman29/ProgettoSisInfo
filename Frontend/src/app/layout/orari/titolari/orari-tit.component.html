@@ -1,0 +1,54 @@
+<div class="container mx-auto">
+	<div class="buttons flex justify-center mt-10">
+		<select class="select-input" [(ngModel)]="selectedEmployeeId">
+			<option value="0" disabled selected>Scegli un dipendente</option>
+			<option *ngFor="let empl of employees" [value]="empl.id">{{ empl.name }}</option>
+		</select>
+	</div>
+	<form [formGroup]="weekForm" (ngSubmit)="saveForm()" class="mt-10">
+		<div formArrayName="days" class="grid grid-cols-3 gap-8">
+			<div *ngFor="let day of getDayForm()?.controls; index as j" [formGroupName]="j">
+				<div class="bg-white rounded shadow-lg p-6">
+					<h4 class="text-xl mb-4">{{ day.get('name')?.value }}</h4>
+					<div class="mb-4">
+						<label class="font-bold">Morning Activity</label>
+						<select
+							formControlName="morningActivity"
+							class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+						>
+							<option *ngFor="let activity of activities" [value]="activity">
+								{{ activity }}
+							</option>
+						</select>
+					</div>
+					<div class="mb-4">
+						<label class="font-bold">Afternoon Activity</label>
+						<select
+							formControlName="afternoonActivity"
+							class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+						>
+							<option *ngFor="let activity of activities" [value]="activity">
+								{{ activity }}
+							</option>
+						</select>
+					</div>
+					<div class="mb-4">
+						<label class="font-bold">Lunch</label>
+						<input
+							type="text"
+							formControlName="lunch"
+							class="block w-full mt-1 rounded-md border-gray-300 shadow-sm"
+							readonly
+						/>
+					</div>
+				</div>
+			</div>
+		</div>
+		<button
+			type="submit"
+			class="w-[10rem] mt-6 px-4 py-2 rounded font-bold bg-blue-500 text-white"
+		>
+			Save
+		</button>
+	</form>
+</div>

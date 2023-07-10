@@ -1,0 +1,27 @@
+<div class="container">
+    <h1>Lista dipendenti</h1>
+  
+    <!-- Form di ricerca -->
+    <div class="search-bar">
+      <input class="search-input" type="text" formControlName="searchText" placeholder="Cerca per nome">
+      <button class="search-button" type="submit">Cerca</button>
+    </div>
+  
+    <!-- Filtri -->
+    <div class="filters">
+      <label class="filter-label">
+        <input type="checkbox" formControlName="filterMechanic"> Meccanico
+      </label>
+      <label class="filter-label">
+        <input type="checkbox" formControlName="filterStorekeeper"> Magazziniere
+      </label>
+    </div>
+  
+    <!-- Lista dei dipendenti -->
+    <div class="employee-list">
+      <div class="employee-item" *ngFor="let employee of filteredEmployees">
+        {{ employee.name }} - {{ employee.role }}
+      </div>
+    </div>
+  </div>
+  

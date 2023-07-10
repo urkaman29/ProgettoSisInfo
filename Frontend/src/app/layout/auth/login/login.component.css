@@ -1,0 +1,86 @@
+.container {
+	background-image: url('https://i.imgur.com/KPBwDgM.png');
+	background-size: cover;
+	background-position: center;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+}
+
+.login-box {
+	width: 300px;
+	padding: 20px;
+	text-align: center;
+	background-color: #ffffff;
+	border-radius: 25px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.login-box img {
+	width: 300px;
+	margin-bottom: 20px;
+}
+
+.input-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.rounded-input {
+	width: 100%;
+	padding: 10px;
+	padding-left: 35px; /* Aggiungi questo per fare spazio all'icona */
+	margin-bottom: 10px;
+	border-radius: 20px;
+	border: 1px solid #ffffff;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.rounded-input:hover {
+	transform: scale(1.02);
+}
+
+.input-container i {
+	position: absolute;
+	left: 10px;
+	bottom: 22px;
+	color: #ccc;
+}
+
+.remember-me {
+	text-align: left;
+	margin-bottom: 10px;
+}
+
+.remember-me input[type='checkbox'] {
+	margin-right: 5px;
+}
+
+.login-button {
+	width: 100%;
+	padding: 20px;
+	background-color: yellow;
+	color: black;
+	border: none;
+	border-radius: 10px;
+	cursor: pointer;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.login-button:hover {
+	transform: scale(1.02);
+}
+
+.login-button:active {
+	transform: scale(1);
+}
+
+.register-link {
+	margin-top: 20px;
+	text-decoration: underline;
+	color: #007bff;
+	cursor: pointer;
+}

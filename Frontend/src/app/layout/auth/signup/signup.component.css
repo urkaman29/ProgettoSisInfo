@@ -1,0 +1,26 @@
+.btn-register {
+	background-color: #007bff;
+	color: #fff;
+	cursor: pointer;
+}
+
+.btn-register:hover {
+	background-color: #0056b3;
+}
+
+.btn-register:disabled {
+	background-color: #007bff;
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+.btn-back {
+	background-color: #dc3545;
+	color: #fff;
+	margin-right: 10px;
+	cursor: pointer;
+}
+
+.btn-back:hover {
+	background-color: #b02a37;
+}

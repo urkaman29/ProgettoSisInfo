@@ -22,8 +22,7 @@ public class NotificationService {
     }
 
     public Notification getNotificationById(Long id) {
-        Optional<Notification> notification = notificationRepository.findById(id);
-        return notification.orElse(null);
+        return notificationRepository.findById(id).orElse(null);
     }
 
     public Notification createNotification(Notification notification) {
@@ -31,15 +30,16 @@ public class NotificationService {
     }
 
     public Notification updateNotification(Long id, Notification updatedNotification) {
-        Optional<Notification> notification = notificationRepository.findById(id);
-        if (notification.isPresent()) {
-            Notification existingNotification = notification.get();
-            existingNotification.setMessage(updatedNotification.getMessage());
-            existingNotification.setDate(updatedNotification.getDate());
-            existingNotification.setRead(updatedNotification.isRead());
-            return notificationRepository.save(existingNotification);
-        }
-        return null;
+        var notification = notificationRepository.findById(id);
+
+        if (notification.isEmpty()) return null;
+
+        var existingNotification = notification.get();
+        existingNotification.setMessage(updatedNotification.getMessage());
+        existingNotification.setDate(updatedNotification.getDate());
+        existingNotification.setRead(updatedNotification.isRead());
+
+        return notificationRepository.save(existingNotification);
     }
 
     public void deleteNotification(Long id) {

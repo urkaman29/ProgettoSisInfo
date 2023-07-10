@@ -5,6 +5,7 @@ import com.sisinfo.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -12,53 +13,54 @@ import java.util.List;
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
-    @PreAuthorize("hasRole('client admin')")
+
+
+    @PreAuthorize("hasRole('titolare')")
+    @PutMapping("{id}")
+    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
+        return employeeService.updateEmployee(id, employee);
+    }
+    @PreAuthorize("hasRole('titolare')")
     @GetMapping
     public List<Employee> getAllEmployees() {
         return employeeService.getAllEmployees();
     }
 
-    @PreAuthorize ("hasRole('client admin')")
+    @PreAuthorize("hasRole('titolare')")
     @GetMapping("/{id}")
     public Employee getEmployeeById(@PathVariable Long id) {
         return employeeService.getEmployeeDTO(id);
     }
 
-    @PreAuthorize("hasRole('client admin')")
+    @PreAuthorize("hasRole('titolare')")
     @GetMapping("/{identifier}")
     public Employee getEmployeeByIdentifier(@PathVariable String identifier) {
-        if (identifier.matches("\\d+")) { // Se l'identificatore è un numero, assume che sia un ID
-            Long id = Long.parseLong(identifier);
-            return employeeService.getEmployeeById(id);
-        } else if (identifier.contains("@")) { // Se l'identificatore contiene una @, assume che sia un'email
-            return employeeService.getEmployeeByEmail(identifier);
-        } else { // Altrimenti, assume che sia il nome
-            return employeeService.getEmployeeByName(identifier);
-        }
+        // Se l'identificatore è un numero, assume che sia un ID
+        if (identifier.matches("\\d+"))
+            return employeeService.getEmployeeById(Long.parseLong(identifier));
+
+        // Se l'identificatore contiene una @, assume che sia un'email
+        if (identifier.contains("@")) return employeeService.getEmployeeByEmail(identifier);
+
+        // Altrimenti, assume che sia il nome
+        return employeeService.getEmployeeByName(identifier);
     }
 
-    @GetMapping("/worked-hours/{employeeId}")
+    @GetMapping("/{employeeId}/worked-hours")
     public int getBaseSalary(@PathVariable Long employeeId) {
         return employeeService.getBaseSalary(employeeId);
     }
 
 
     @PostMapping
-    @PreAuthorize("hasRole('client_admin')")
+    @PreAuthorize("hasRole('titolare')")
     public Employee createEmployee(@RequestBody Employee employee) {
         // Check if an employee with the same email, name, or telephone already exists
         if (employeeService.existsByEmail(employee.getEmail()) ||
-                employeeService.existsByTelephone(employee.getTelephone())) {
+                employeeService.existsByTelephone(employee.getTelephone()))
             throw new IllegalArgumentException("An employee with the same email, name, or telephone already exists.");
-        }
 
         return employeeService.createEmployee(employee);
-    }
-
-    @PreAuthorize ("hasRole('client admin')")
-    @PutMapping("/update/{id}")
-    public Employee updateEmployee(@PathVariable Long id, @RequestBody Employee employee) {
-        return employeeService.updateEmployee(id, employee);
     }
 
 
@@ -68,7 +70,7 @@ public class EmployeeController {
     }
 
 
-    @PreAuthorize ("hasRole('client admin')")
+    @PreAuthorize("hasRole('titolare')")
     @DeleteMapping("/{id}")
     public void deleteEmployee(@PathVariable Long id) {
         employeeService.deleteEmployee(id);

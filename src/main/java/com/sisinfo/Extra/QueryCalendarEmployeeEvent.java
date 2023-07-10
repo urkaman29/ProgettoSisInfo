@@ -1,4 +1,5 @@
 package com.sisinfo.Extra;
+
 import org.w3c.dom.*;
 import org.w3c.dom.ls.DOMImplementationLS;
 import org.w3c.dom.ls.LSSerializer;
@@ -8,15 +9,16 @@ import java.io.File;
 
 public class QueryCalendarEmployeeEvent {
     public static void main(String[] args) {
-        String filePath = "path_del_tuo_file.xml";
-        String parameter = "Calendar";
-        NodeList queryResult = queryXML(filePath, parameter);
+        var filePath = "path_del_tuo_file.xml";
+        var parameter = "Calendar";
+        var queryResult = queryXML(filePath, parameter);
 
         if (queryResult != null) {
             for (int i = 0; i < queryResult.getLength(); i++) {
                 Node node = queryResult.item(i);
                 System.out.println(nodeToString(node));
             }
+
         } else {
             System.out.println("Parametro non valido");
         }

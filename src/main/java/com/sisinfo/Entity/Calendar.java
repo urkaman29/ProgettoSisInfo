@@ -1,8 +1,6 @@
 package com.sisinfo.Entity;
-
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 

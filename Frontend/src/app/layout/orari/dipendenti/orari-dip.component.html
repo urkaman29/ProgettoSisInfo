@@ -1,0 +1,18 @@
+<div class="calendario">
+	<div class="calendario">
+		<div class="giorno-grid">
+			<div class="giorno" *ngFor="let day of calendarDays">
+				<h3>{{ day.date }}</h3>
+				<div class="caselle">
+					<div class="casella" *ngFor="let slot of day.slots">
+						<div class="slot-time">{{ slot.time }}</div>
+						<div class="slot-content">
+							{{ slot.type }}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<button class="button" (click)="sendEmailToOwner()">Invia richiesta</button>
+</div>

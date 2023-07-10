@@ -16,12 +16,12 @@ public class Event {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @Column(name = "Type", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private EventType eventType;
+    @Column(
+            name = "Type",
+            nullable = false,
+            columnDefinition = "VARCHAR(255) default 'lavoro'"
+    )
+    private String eventType;
 
     @OneToOne
     @JoinColumn(name = "day_id")
@@ -31,13 +31,4 @@ public class Event {
     @JoinColumn(name = "calendar_id")
     private Calendar calendar;
 
-
-
-    public enum EventType {
-        Lavoro,
-        Feste,
-        Permesso,
-        Ferie,
-        Malattia
-    }
 }

@@ -1,4 +1,5 @@
 package com.sisinfo.Entity;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
@@ -18,17 +19,17 @@ public class Employee {
     private Long id;
     @Column(name = "name", nullable = false)
     private String name;
-    @Column(name = "telephone", nullable = false)
+    @Column(name = "telephone")
     private int telephone;
     @Column(name = "email", nullable = false)
     private String email;
-    @Column(name = "baseSalary", nullable = false)
+    @Column(name = "baseSalary")
     private double baseSalary;
-    @Column(name = "workedHours", nullable = false)
+    @Column(name = "workedHours")
     private int workedHours;
-    @Column(name = "vacationHours", nullable = false)
+    @Column(name = "vacationHours")
     private int vacationHours;
-    @Column(name = "permissionHours", nullable = false)
+    @Column(name = "permissionHours")
     private int permissionHours;
 
     @JsonIgnore

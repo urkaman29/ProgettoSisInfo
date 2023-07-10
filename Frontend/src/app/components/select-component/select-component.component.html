@@ -1,0 +1,20 @@
+<div class="mb-4">
+	<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2">{{
+		labelText
+	}}</label>
+	<div
+		class="flex items-center border rounded py-3 px-3 text-grey-darker relative"
+		[ngClass]="{
+			'border-red-500': formControl.invalid && formControl.touched,
+			'focus-within:border-blue-500': formControl.valid
+		}"
+	>
+		<i class="fas fa-users mr-2 text-grey-darker absolute left-3"></i>
+		<select
+			class="appearance-none block w-full bg-transparent outline-none pl-8"
+			[formControl]="formControl"
+		>
+			<ng-content></ng-content>
+		</select>
+	</div>
+</div>

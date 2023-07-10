@@ -1,0 +1,112 @@
+<div class="mt-[4rem] flex justify-center items-center">
+	<div class="w-full max-w-sm mx-auto p-6 mt-4 bg-white rounded-xl shadow-md">
+		<form [formGroup]="userForm">
+			<div class="mb-4">
+				<label
+					class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+					>Name</label
+				>
+				<div
+					class="flex items-center border rounded-xl py-3 px-3 text-grey-darker"
+					[ngClass]="{
+						'border-red-500':
+							userForm.controls['name'].invalid && userForm.controls['name'].touched,
+						'focus-within:border-blue-500': userForm.controls['name'].valid
+					}"
+				>
+					<i class="fas fa-user mr-2 text-grey-darker"></i>
+					<input
+						class="appearance-none block w-full bg-transparent outline-none"
+						placeholder="Name"
+						formControlName="name"
+					/>
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label
+					class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+					>Email</label
+				>
+				<div
+					class="flex items-center border rounded-xl py-3 px-3 text-grey-darker"
+					[ngClass]="{
+						'border-red-500':
+							userForm.controls['email'].invalid && userForm.controls['email'].touched,
+						'focus-within:border-blue-500': userForm.controls['email'].valid
+					}"
+				>
+					<i class="fas fa-envelope mr-2 text-grey-darker"></i>
+					<input
+						class="appearance-none block w-full bg-transparent outline-none"
+						placeholder="Email"
+						formControlName="email"
+					/>
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label
+					class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+					>Password</label
+				>
+				<div
+					class="flex items-center border rounded-xl py-3 px-3 text-grey-darker"
+					[ngClass]="{
+						'border-red-500':
+							userForm.controls['password'].invalid &&
+							userForm.controls['password'].touched,
+						'focus-within:border-blue-500': userForm.controls['password'].valid
+					}"
+				>
+					<i class="fas fa-lock mr-2 text-grey-darker"></i>
+					<input
+						type="password"
+						class="appearance-none block w-full bg-transparent outline-none"
+						placeholder="Password"
+						formControlName="password"
+					/>
+				</div>
+			</div>
+
+			<div class="mb-4">
+				<label
+					class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2"
+					>Role</label
+				>
+				<div
+					class="flex items-center border rounded-xl py-3 px-3 text-grey-darker relative"
+					[ngClass]="{
+						'border-red-500':
+							userForm.controls['role'].invalid && userForm.controls['role'].touched,
+						'focus-within:border-blue-500': userForm.controls['role'].valid
+					}"
+				>
+					<i class="fas fa-users mr-2 text-grey-darker absolute left-3"></i>
+					<select
+						class="appearance-none block w-full bg-transparent outline-none pl-8"
+						formControlName="role"
+					>
+						<option value="Magazziniere">Magazziniere</option>
+						<option value="Meccanico">Meccanico</option>
+					</select>
+				</div>
+			</div>
+			<div class="flex items-center justify-between">
+				<button
+					class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-2 px-4 leading-normal no-underline btn-back"
+					(click)="back()"
+				>
+					Indietro
+				</button>
+				<button
+					class="inline-block align-middle text-center select-none border font-normal whitespace-no-wrap rounded py-2 px-4 leading-normal no-underline btn-register"
+					(click)="register()"
+					[disabled]="userForm.invalid"
+				>
+					Registra
+				</button>
+			</div>
+		</form>
+	</div>
+</div>

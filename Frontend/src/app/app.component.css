@@ -1,0 +1,10 @@
+.active-link {
+	background-color: rgba(59, 130, 246, 0.5); /* Blue tint with 50% opacity */
+	border-radius: 0.25rem;
+	font-weight: 500;
+}
+
+.active-link:hover {
+	background-color: rgba(59, 130, 246, 0.7); /* Darker blue tint with 70% opacity */
+	color: #ffffff;
+}

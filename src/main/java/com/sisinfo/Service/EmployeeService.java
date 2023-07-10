@@ -11,6 +11,10 @@ public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
 
+    public boolean userExists(String name, String email) {
+        return employeeRepository.existsByNameOrEmail(name, email);
+    }
+
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
